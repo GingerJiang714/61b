@@ -85,8 +85,11 @@ public class IntList {
         if(A == null){
             return B;
         }
-        else{
-            A.rest = B;
+        else if (B == null) {
+            return A;
+        }
+        else {
+            A.tail = dcatenate(A.tail, B);
             return A;
         }
 
