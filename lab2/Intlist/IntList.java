@@ -89,7 +89,7 @@ public class IntList {
             return A;
         }
         else {
-            A.tail = dcatenate(A.tail, B);
+            A.rest = dcatenate(A.rest, B);
             return A;
         }
 
