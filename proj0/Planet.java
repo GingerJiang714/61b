@@ -8,6 +8,8 @@ public class Planet {
     public double mass;
     public String imgFileName;
     static final double g = 6.67e-11;
+
+    
     
     public Planet(double xP, double yP, double xV,
               double yV, double m, String img){
@@ -27,8 +29,8 @@ public class Planet {
         imgFileName = p.imgFileName;
     }
     public double calcDistance(Planet p){
-        double dx = p.xxPos - this.xxPos;
-        double dy = p.yyPos - this.xxPos;
+        double dx = this.xxPos - p.xxPos;
+        double dy = this.yyPos - p.yyPos;
         return Math.sqrt(dx*dx + dy*dy);
 
     }
