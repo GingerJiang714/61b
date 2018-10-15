@@ -21,6 +21,16 @@ public class IntListTest {
     }
 
     @Test
+    public void testReverse(){
+        IntList L = IntList.of(1,2,3);
+        IntList res =IntList.reverse(L);
+        assertNotEquals(res,L);
+        assertEquals(IntList.of(3,2,1), res);
+        assertEquals(new IntList(), IntList.reverse(new IntList()));
+    }
+
+
+    @Test
     public void testdSquareList() {
         IntList L = IntList.of(1, 2, 3);
         IntList.dSquareList(L);
@@ -69,5 +79,9 @@ public class IntListTest {
     /** If you're running this from the command line, you'll need
       * to add a main method. See ArithmeticTest.java for an
       * example. */
-
+    public static void main(String... args) {
+        jh61b.junit.TestRunner.runTests("all", IntListTest.class);
+    }
 }
+
+
