@@ -17,27 +17,27 @@ public class ArrayDeque<T> {
 
     private void checkSize() {
         if (size == array.length) {
-            T[] temp = (T[]) new Object[size *2];
-            System.arraycopy(array,0,temp,0,nextLast);
-            System.arraycopy(array, nextLast, temp,temp.length - (size - nextLast) ,size-nextLast);
+            T[] temp = (T[]) new Object[size * 2];
+            System.arraycopy(array, 0, temp, 0, nextLast);
+            System.arraycopy(array, nextLast, temp,
+                    temp.length - (size - nextLast), size - nextLast);
             array = temp;
-            nextFirst = temp.length - (size - nextLast) -1;
+            nextFirst = temp.length - (size - nextLast) - 1;
 
         }
     }
 
     private void decreaseSize() {
-        if (array.length >=16 && size / (double)array.length < 0.25) {
-            T[] temp = (T[]) new Object[array.length /2];
-            if (nextFirst < nextLast ) {
+        if (array.length >= 16 && size / (double) array.length < 0.25) {
+            T[] temp = (T[]) new Object[array.length / 2];
+            if (nextFirst < nextLast) {
                 System.arraycopy(array, nextFirst + 1, temp, (nextFirst + 1) / 2, size);
-                nextLast = nextFirst+ 1 +size;
-            }else {
-                System.arraycopy(array,0 ,temp, 0, nextLast);
-                System.arraycopy(array,nextFirst + 1 , temp,(nextFirst + 1) / 2 ,size - nextLast);
-
+                nextLast = nextFirst + 1 + size;
+            } else {
+                System.arraycopy(array, 0, temp, 0, nextLast);
+                System.arraycopy(array, nextFirst + 1, temp, (nextFirst + 1) / 2, size - nextLast);
             }
-            nextFirst = nextFirst/2;
+            nextFirst = nextFirst / 2;
         }
     }
 
@@ -45,21 +45,21 @@ public class ArrayDeque<T> {
     public void addFirst(T item) {
         checkSize();
         array[nextFirst] = item;
-        nextFirst --;
+        nextFirst--;
         if (nextFirst < 0) {
             nextFirst = array.length - 1;
         }
-        size ++;
+        size++;
     }
 
     public void addLast(T item) {
         checkSize();
         array[nextLast] = item;
-        nextLast ++;
+        nextLast++;
         if (nextLast >= array.length) {
             nextLast = 0;
         }
-        size ++;
+        size++;
     }
 
     public boolean isEmpty() {
@@ -79,46 +79,40 @@ public class ArrayDeque<T> {
             if (first >= array.length) {
                 first = 0;
             }
-            System.out.print(array[first]+" ");
-            first ++;
-            temp ++;
+            System.out.print(array[first] + " ");
+            first++;
+            temp++;
         }
 
     }
 
     public T removeFirst() {
-        decreaseSize();
         int first;
-        if (nextFirst == array.length -1) {
+        if (nextFirst == array.length - 1) {
             first = 0;
-        }else {
-            first = nextFirst++ ;
+        } else {
+            first = nextFirst++;
         }
-         T res = array[first];
-         array[first] = null;
-         nextFirst ++;
-         if (nextFirst >= array.length) {
-             nextFirst = 0;
-         }
-         size --;
-         return res;
+        T res = array[first];
+        array[first] = null;
+        nextFirst = first;
+        size--;
+        decreaseSize();
+        return res;
     }
 
     public T removeLast() {
-        decreaseSize();
         int last;
         if (nextLast == 0) {
-            last = array.length -1;
-        }else {
-            last = nextLast-- ;
+            last = array.length - 1;
+        } else {
+            last = nextLast--;
         }
         T res = array[last];
         array[last] = null;
-        nextLast --;
-        if (nextLast < 0) {
-            nextLast = array.length - 1;
-        }
-        size --;
+        nextLast = last;
+        size--;
+        decreaseSize();
         return res;
     }
 
@@ -127,7 +121,7 @@ public class ArrayDeque<T> {
         if (first >= array.length) {
             first = 0;
         }
-        T res = array[(index+first)%array.length];
+        T res = array[(index + first) % array.length];
         return res;
 
     }

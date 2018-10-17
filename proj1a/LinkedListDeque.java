@@ -18,21 +18,21 @@ public class LinkedListDeque<T> {
         }
     }
 
-    private LinkedListDeque() {
+    public LinkedListDeque() {
 
         sentinel = new DequeNode(null, null, null);
-        sentinel.prev =sentinel;
+        sentinel.prev = sentinel;
         sentinel.next = sentinel;
-        size = 0 ;
+        size = 0;
     }
 
     public void addFirst(T item) {
 
         DequeNode temp = sentinel.next;
         DequeNode dump = sentinel.next.prev;
-        sentinel.next = new DequeNode(item, dump , temp);
+        sentinel.next = new DequeNode(item, dump, temp);
         sentinel.next.next.prev = sentinel.next;
-        size++ ;
+        size++;
 
     }
     public void addLast(T item) {
@@ -41,7 +41,7 @@ public class LinkedListDeque<T> {
         DequeNode dump = sentinel.next.prev;
         sentinel.prev = new DequeNode(item, temp, dump);
         sentinel.prev.prev.next = sentinel.prev;
-        size ++;
+        size++;
 
     }
 
@@ -72,7 +72,7 @@ public class LinkedListDeque<T> {
         T res = sentinel.next.key;
         sentinel.next = sentinel.next.next;
         sentinel.next.prev = sentinel;
-        size --;
+        size--;
         return res;
 
     }
@@ -82,7 +82,7 @@ public class LinkedListDeque<T> {
         T res = sentinel.prev.key;
         sentinel.prev = sentinel.prev.prev;
         sentinel.prev.next = sentinel;
-        size --;
+        size--;
         return res;
 
     }
@@ -91,9 +91,9 @@ public class LinkedListDeque<T> {
 
         int cur = 0;
         DequeNode temp = sentinel.next;
-        while (cur != index ) {
+        while (cur != index) {
             temp = temp.next;
-            cur ++;
+            cur++;
         }
         return temp.key;
 
@@ -108,7 +108,7 @@ public class LinkedListDeque<T> {
     private T getRecursiveHelp(int index, int cur, DequeNode copy) {
         if (cur == index) {
             return copy.key;
-        }else{
+        } else {
             cur++;
             return getRecursiveHelp(index, cur, copy.next);
         }
