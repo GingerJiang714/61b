@@ -15,7 +15,7 @@ public class ArrayDeque<T> {
 
     // only resize is tricky here.
 
-    public void checkSize() {
+    private void checkSize() {
         if (size == array.length) {
             T[] temp = (T[]) new Object[size *2];
             System.arraycopy(array,0,temp,0,nextLast);
@@ -26,7 +26,7 @@ public class ArrayDeque<T> {
         }
     }
 
-    public void decreaseSize() {
+    private void decreaseSize() {
         if (array.length >=16 && size / (double)array.length < 0.25) {
             T[] temp = (T[]) new Object[array.length /2];
             if (nextFirst < nextLast ) {
@@ -70,7 +70,7 @@ public class ArrayDeque<T> {
         return size;
     }
 
-   
+
     public void printDeque() {
         int first = nextFirst++;
 
@@ -88,8 +88,14 @@ public class ArrayDeque<T> {
 
     public T removeFirst() {
         decreaseSize();
-         T res = array[nextFirst];
-         array[nextFirst] = null;
+        int first;
+        if (nextFirst == array.length -1) {
+            first = 0;
+        }else {
+            first = nextFirst++ ;
+        }
+         T res = array[first];
+         array[first] = null;
          nextFirst ++;
          if (nextFirst >= array.length) {
              nextFirst = 0;
@@ -100,8 +106,14 @@ public class ArrayDeque<T> {
 
     public T removeLast() {
         decreaseSize();
-        T res = array[nextLast];
-        array[nextLast] = null;
+        int last;
+        if (nextLast == 0) {
+            last = array.length -1;
+        }else {
+            last = nextLast-- ;
+        }
+        T res = array[last];
+        array[last] = null;
         nextLast --;
         if (nextLast < 0) {
             nextLast = array.length - 1;
