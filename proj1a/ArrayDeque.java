@@ -47,11 +47,11 @@ public class ArrayDeque<T> {
         if (array.length >= 16 && size / (double) array.length < 0.25) {
             T[] temp = (T[]) new Object[array.length / 2];
             if (nextFirst < nextLast) {
-                System.arraycopy(array, nextFirst + 1, temp, (nextFirst + 1) / 2, size);
-                nextLast = nextFirst + 1 + size;
+                System.arraycopy(array, plusOne(nextFirst), temp, plusOne(nextFirst) / 2, size);
+                nextLast = plusOne(nextFirst) + size;
             } else {
                 System.arraycopy(array, 0, temp, 0, nextLast);
-                System.arraycopy(array, nextFirst + 1, temp, (nextFirst + 1) / 2, size - nextLast);
+                System.arraycopy(array, plusOne(nextFirst), temp, plusOne(nextFirst) / 2, size - nextLast);
             }
             array = temp;
             nextFirst = nextFirst / 2;
@@ -117,7 +117,7 @@ public class ArrayDeque<T> {
 
     public T get(int index) {
         int first = plusOne(nextFirst);
-        T res = array[(index + first) % array.length];
+        T res = array[(index + first) % (array.length)];
         return res;
 
     }
