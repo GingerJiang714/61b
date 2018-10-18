@@ -9,8 +9,8 @@ public class ArrayDeque<T> {
 
         array = (T[]) new Object[8];
         size = 0;
-        nextFirst = 4;
-        nextLast = 5;
+        nextFirst = 0;
+        nextLast = 1;
     }
 
     private int minusOne(int index) {
@@ -34,11 +34,11 @@ public class ArrayDeque<T> {
     private void checkSize() {
         if (size == array.length) {
             T[] temp = (T[]) new Object[size * 2];
-            System.arraycopy(array, 0, temp, 0, nextLast);
-            System.arraycopy(array, nextLast, temp,
-                    temp.length - (size - nextLast), size - nextLast);
+            System.arraycopy(array, nextLast, temp, 0, size - nextLast);
+            System.arraycopy(array, 0, temp, size - nextLast, nextLast);
             array = temp;
-            nextFirst = temp.length - (size - nextLast) - 1;
+            nextFirst = array.length - 1;
+            nextLast = size;
 
         }
     }
@@ -46,15 +46,16 @@ public class ArrayDeque<T> {
     private void decreaseSize() {
         if (array.length >= 16 && size / (double) array.length < 0.25) {
             T[] temp = (T[]) new Object[array.length / 2];
-            if (nextFirst < nextLast) {
-                System.arraycopy(array, plusOne(nextFirst), temp, plusOne(nextFirst) / 2, size);
-                nextLast = plusOne(nextFirst) + size;
+            if (array[0] == null) {
+                System.arraycopy(array, plusOne(nextFirst), temp, 0, size);
             } else {
-                System.arraycopy(array, 0, temp, 0, nextLast);
-                System.arraycopy(array, plusOne(nextFirst), temp, plusOne(nextFirst) / 2, size - nextLast);
+                System.arraycopy(array, plusOne(nextFirst), temp, 0, array.length - plusOne(nextFirst));
+                System.arraycopy(array, 0, temp, array.length - plusOne(nextFirst), nextLast);
             }
+
             array = temp;
-            nextFirst = nextFirst / 2;
+            nextFirst = array.length - 1;
+            nextLast = size;
         }
     }
 
