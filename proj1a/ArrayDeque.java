@@ -13,6 +13,22 @@ public class ArrayDeque<T> {
         nextLast = 5;
     }
 
+    public int minusOne(int index) {
+        if (index == 0) {
+            return (array.length - 1);
+        } else {
+            return (index - 1);
+        }
+    }
+
+    public int plusOne(int index) {
+        if (index == array.length - 1) {
+            return 0;
+        } else {
+            return (index + 1);
+        }
+    }
+
     // only resize is tricky here.
 
     private void checkSize() {
@@ -45,20 +61,14 @@ public class ArrayDeque<T> {
     public void addFirst(T item) {
         checkSize();
         array[nextFirst] = item;
-        nextFirst--;
-        if (nextFirst < 0) {
-            nextFirst = array.length - 1;
-        }
+        nextFirst = minusOne(nextFirst);
         size++;
     }
 
     public void addLast(T item) {
         checkSize();
         array[nextLast] = item;
-        nextLast++;
-        if (nextLast >= array.length) {
-            nextLast = 0;
-        }
+        nextLast = plusOne(nextLast);
         size++;
     }
 
@@ -67,32 +77,25 @@ public class ArrayDeque<T> {
     }
 
     public int size() {
+        if (size <= 0) {
+            return 0;
+        }
         return size;
     }
 
 
     public void printDeque() {
-        int first = nextFirst++;
-
         int temp = 0;
-        while (temp < size) {
-            if (first >= array.length) {
-                first = 0;
-            }
+        while (temp <= size) {
+            int first = plusOne(nextFirst);
             System.out.print(array[first] + " ");
-            first++;
             temp++;
         }
 
     }
 
     public T removeFirst() {
-        int first;
-        if (nextFirst == array.length - 1) {
-            first = 0;
-        } else {
-            first = nextFirst++;
-        }
+        int first = plusOne(nextFirst);
         T res = array[first];
         array[first] = null;
         nextFirst = first;
@@ -102,12 +105,7 @@ public class ArrayDeque<T> {
     }
 
     public T removeLast() {
-        int last;
-        if (nextLast == 0) {
-            last = array.length - 1;
-        } else {
-            last = nextLast--;
-        }
+        int last = minusOne(nextLast);
         T res = array[last];
         array[last] = null;
         nextLast = last;
@@ -117,10 +115,7 @@ public class ArrayDeque<T> {
     }
 
     public T get(int index) {
-        int first = nextFirst++;
-        if (first >= array.length) {
-            first = 0;
-        }
+        int first = plusOne(nextFirst);
         T res = array[(index + first) % array.length];
         return res;
 
