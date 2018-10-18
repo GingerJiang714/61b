@@ -13,7 +13,7 @@ public class ArrayDeque<T> {
         nextLast = 5;
     }
 
-    public int minusOne(int index) {
+    private int minusOne(int index) {
         if (index == 0) {
             return (array.length - 1);
         } else {
@@ -21,7 +21,7 @@ public class ArrayDeque<T> {
         }
     }
 
-    public int plusOne(int index) {
+    private int plusOne(int index) {
         if (index == array.length - 1) {
             return 0;
         } else {
@@ -53,6 +53,7 @@ public class ArrayDeque<T> {
                 System.arraycopy(array, 0, temp, 0, nextLast);
                 System.arraycopy(array, nextFirst + 1, temp, (nextFirst + 1) / 2, size - nextLast);
             }
+            array = temp;
             nextFirst = nextFirst / 2;
         }
     }
